@@ -2,8 +2,8 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { darken, rgba } from 'polished';
-import { color, typography } from './shared/styles';
-import { easing } from './shared/animation';
+import { color, typography } from '../shared/styles';
+import { easing } from '../shared/animation';
 
 const Text = styled.span`
   display: inline-block;
@@ -305,24 +305,12 @@ const StyledButton = styled.button`
 
 `;
 
-const ButtonLink = StyledButton.withComponent('a');
-
-const applyStyle = ButtonWrapper => {
-  return (
-    ButtonWrapper &&
-    StyledButton.withComponent(({ containsIcon, isLoading, isUnclickable, ...rest }) => (
-      <ButtonWrapper {...rest} />
-    ))
-  );
-};
-
 export function Button({
   isDisabled,
   isLoading,
   loadingText,
   isLink,
   children,
-  ButtonWrapper,
   ...props
 }) {
   const buttonInner = (
@@ -332,19 +320,10 @@ export function Button({
     </Fragment>
   );
 
-  const StyledButtonWrapper = React.useMemo(() => applyStyle(ButtonWrapper), [ButtonWrapper]);
-
-  let SelectedButton = StyledButton;
-  if (ButtonWrapper) {
-    SelectedButton = StyledButtonWrapper;
-  } else if (isLink) {
-    SelectedButton = ButtonLink;
-  }
-
   return (
-    <SelectedButton isLoading={isLoading} disabled={isDisabled} {...props}>
+    <StyledButton isLoading={isLoading} disabled={isDisabled} {...props}>
       {buttonInner}
-    </SelectedButton>
+    </StyledButton>
   );
 }
 
@@ -370,7 +349,6 @@ Button.propTypes = {
   */
   containsIcon: PropTypes.bool,
   size: PropTypes.oneOf(Object.values(SIZES)),
-  ButtonWrapper: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
 };
 
 Button.defaultProps = {
@@ -382,5 +360,4 @@ Button.defaultProps = {
   isUnclickable: false,
   containsIcon: false,
   size: SIZES.MEDIUM,
-  ButtonWrapper: undefined,
 };
