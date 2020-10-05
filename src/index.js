@@ -5,8 +5,6 @@ import * as icons from './shared/icons';
 
 export { styles, global, animation, icons };
 
-export * from './Avatar';
-export * from './Badge';
-export * from './Button';
-export * from './Icon';
-export * from './Link';
+export * from './Avatar/Avatar';
+export * from './Button/Button';
+export * from './Icon/Icon';
